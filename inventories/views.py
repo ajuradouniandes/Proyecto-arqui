@@ -31,7 +31,7 @@ class InventoryMovementViewSet(viewsets.ModelViewSet):
     @transaction.atomic
     def perform_create(self, serializer):
         movement = serializer.save()
-        inv = Inventory.objects.select_for_update().get(pk=movement.id_inventory_id)
+        inv = Inventory.objects.select_for_update().get(pk=movement.id_inventory)
 
         delta = self._delta(movement.movement_type, movement.quantity)
         # Validación para no dejar inventario negativo
@@ -52,7 +52,7 @@ class InventoryMovementViewSet(viewsets.ModelViewSet):
         # 2) guardar cambios y aplicar el nuevo efecto
         movement = serializer.save()  # ya puede tener nuevos tipo/cantidad/inventario
         # si cambió de inventario, bloquear el nuevo
-        new_inv = Inventory.objects.select_for_update().get(pk=movement.id_inventory_id)
+        new_inv = Inventory.objects.select_for_update().get(pk=movement.id_inventory)
         new_inv.refresh_from_db()  # cantidad después de revertir
 
         new_delta = self._delta(movement.movement_type, movement.quantity)
@@ -65,7 +65,7 @@ class InventoryMovementViewSet(viewsets.ModelViewSet):
 
     @transaction.atomic
     def perform_destroy(self, instance):
-        inv = Inventory.objects.select_for_update().get(pk=instance.id_inventory_id)
+        inv = Inventory.objects.select_for_update().get(pk=instance.id_inventory)
         delta = self._delta(instance.movement_type, instance.quantity)
 
         # al borrar, se revierte el efecto del movimiento
