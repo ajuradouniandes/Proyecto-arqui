@@ -8,22 +8,22 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ('id_product', 'name', 'description', 'price', 'creation_date', 'update_date',)
         model = models.Product
 
-class BodegaSerializer(serializers.ModelSerializer):
+class WarehouseSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = ('id_bodega', 'name', 'location', 'creation_date', 'update_date',)
-        model = models.Bodega
+        fields = ('id_warehouse', 'name', 'location', 'creation_date', 'update_date',)
+        model = models.Warehouse
 
 class ShelveSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = ('id_shelve', 'name', 'capacity', 'bodega', 'creation_date', 'update_date',)
+        fields = ('id_shelve', 'name', 'capacity', 'warehouse', 'creation_date', 'update_date',)
         model = models.Shelve
 
 class InventorySerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = ('id_inventory', 'id_product', 'id_bodega', 'id_shelve', 'quantity', 'creation_date', 'update_date',)
+        fields = ('id_inventory', 'id_product', 'id_warehouse', 'id_shelve', 'quantity', 'creation_date', 'update_date',)
         model = models.Inventory
 
 class InventoryMovementSerializer(serializers.ModelSerializer):
