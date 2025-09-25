@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from inventories.views import ProductViewSet, WhareHouseViewSet, ShelveViewSet, InventoryViewSet, InventoryMovementViewSet
+from inventories.views import ProductViewSet, WarehouseViewSet, ShelveViewSet, InventoryViewSet, InventoryMovementViewSet
 
 router = DefaultRouter()
 router.register(r"products", ProductViewSet, basename="product")

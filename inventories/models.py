@@ -20,14 +20,14 @@ class Shelve(models.Model):
     id_shelve= models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     capacity = models.IntegerField()
-    bodega = models.ForeignKey(Bodega, on_delete=models.CASCADE, related_name='shelves')
+    warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE, related_name='shelves')
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
 
 class Inventory(models.Model):
     id_inventory = models.AutoField(primary_key=True)
     id_product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    id_bodega = models.ForeignKey(Bodega, on_delete=models.CASCADE)
+    id_warehouse = models.ForeignKey(Warehouse, on_delete=models.CASCADE)
     id_shelve = models.ForeignKey(Shelve, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     creation_date = models.DateTimeField(auto_now_add=True)

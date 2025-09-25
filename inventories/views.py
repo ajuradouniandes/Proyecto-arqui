@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from .models import Product, WhareHouse, Shelve, Inventory, InventoryMovement
+from .models import Product, Wharehouse, Shelve, Inventory, InventoryMovement
 from .serializers import InventorySerializer, ProductSerializer, WarehouseSerializer, ShelveSerializer, InventoryMovementSerializer
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -7,7 +7,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
 
 class WarehouseViewSet(viewsets.ModelViewSet):
-    queryset = Warehouse.objects.all().order_by('id_warehouse')
+    queryset = Wharehouse.objects.all().order_by('id_warehouse')
     serializer_class = WarehouseSerializer
 
 class ShelveViewSet(viewsets.ModelViewSet):
