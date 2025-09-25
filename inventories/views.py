@@ -4,6 +4,8 @@ from .serializers import InventorySerializer, ProductSerializer, WarehouseSerial
 from django.db import transaction
 from django.db.models import F
 from rest_framework.exceptions import ValidationError
+from django.views.decorators.http import require_http_methods
+from django.http import JsonResponse
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -75,3 +77,17 @@ class InventoryMovementViewSet(viewsets.ModelViewSet):
 
         Inventory.objects.filter(pk=inv.pk).update(quantity=F('quantity') - delta)
         instance.delete()
+
+
+def _no_store(response):
+    # Se colocan encabezados para que no se guarde la respuesta que siempre esta disponible en el cache del balanceador
+    response["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response["Pragma"] = "no-cache"
+    return response
+
+
+@require_http_methods(["GET", "HEAD"])
+def health_check(request):
+
+    res = JsonResponse({"status": "ok"})
+    return _no_store(res)
