@@ -145,7 +145,7 @@ STATICFILES_DIRS = (
     #'queue': 'monitoring_replica',  # settings used only in replica
 #}
 
-RABBITMQ_HOST = 'localhost172.31.28.91'
+RABBITMQ_HOST = '172.31.28.91'
 RABBITMQ_PORT = 5672
 RABBITMQ_USER = 'monitoring_user'
 RABBITMQ_PASSWORD = 'arqui111'
