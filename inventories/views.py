@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from .models import Product, Warehouse, Shelve, Inventory, InventoryMovement
 from .serializers import InventorySerializer, ProductSerializer, WarehouseSerializer, ShelveSerializer, InventoryMovementSerializer
 from django.db import transaction
+from django.db.models import F
 from rest_framework.exceptions import ValidationError
 
 
