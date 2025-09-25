@@ -32,3 +32,12 @@ class Inventory(models.Model):
     quantity = models.IntegerField()
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+
+class InventoryMovement(models.Model):
+    id_movement = models.AutoField(primary_key=True)
+    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE, related_name='movements')
+    movement_type = models.CharField(max_length=10)  # 'entrada' o 'salida'
+    quantity = models.IntegerField()
+    movement_date = models.DateTimeField(auto_now_add=True)
+    notes = models.TextField(null=True, blank=True)
+
