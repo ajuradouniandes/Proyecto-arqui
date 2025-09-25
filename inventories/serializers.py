@@ -21,18 +21,12 @@ class ShelveSerializer(serializers.ModelSerializer):
         model = models.Shelve
 
 class InventorySerializer(serializers.ModelSerializer):
-    
-    id_product   = serializers.IntegerField(source='id_product')
-    id_warehouse = serializers.IntegerField(source='id_warehouse')
-    id_shelve    = serializers.IntegerField(source='id_shelve')
 
     class Meta:
         fields = ('id_inventory', 'id_product', 'id_warehouse', 'id_shelve', 'quantity', 'creation_date', 'update_date',)
         model = models.Inventory
 
 class InventoryMovementSerializer(serializers.ModelSerializer):
-    
-    inventory = serializers.IntegerField(source='id_inventiry')
 
     class Meta:
         fields = ('id_movement', 'inventory', 'movement_type', 'quantity', 'movement_date', 'notes',)
