@@ -3,6 +3,8 @@ from .models import Product, Warehouse, Shelve, Inventory, InventoryMovement
 from .serializers import InventorySerializer, ProductSerializer, WarehouseSerializer, ShelveSerializer, InventoryMovementSerializer
 from django.db import transaction
 from rest_framework.exceptions import ValidationError
+
+
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all().order_by('id_product')
     serializer_class = ProductSerializer
