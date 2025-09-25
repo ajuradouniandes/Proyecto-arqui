@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'inventories.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'data-base-inventory',
+        'NAME': 'databaseinventory',
         'USER': 'proyecto_arqui',
         'PASSWORD': 'arqui2025',
         'HOST': 'data-base-inventory.cvkooum6o8l7.us-east-1.rds.amazonaws.com',
