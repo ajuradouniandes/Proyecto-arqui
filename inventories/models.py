@@ -35,7 +35,7 @@ class Inventory(models.Model):
 
 class InventoryMovement(models.Model):
     id_movement = models.AutoField(primary_key=True)
-    id_inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE, related_name='movements')
+    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE, related_name='movements')
     movement_type = models.CharField(max_length=10)  # 'entrada' o 'salida'
     quantity = models.IntegerField()
     movement_date = models.DateTimeField(auto_now_add=True)
