@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'data-base-inventory',
         'USER': 'proyecto_arqui',
         'PASSWORD': 'arqui2025',
-        'HOST': '<data-base-inventory.cvkooum6o8l7.us-east-1.rds.amazonaws.com',
+        'HOST': 'data-base-inventory.cvkooum6o8l7.us-east-1.rds.amazonaws.com',
         'PORT': 5432,
     }
 }
