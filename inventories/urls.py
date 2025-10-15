@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from inventories.views import ProductViewSet, WarehouseViewSet, ShelveViewSet, InventoryViewSet, InventoryMovementViewSet, health_check
+from inventories.views import ProductViewSet, WarehouseViewSet, ShelveViewSet, InventoryViewSet, InventoryMovementViewSet, health_check, WarehouseCreationViewSet
 
 
 router = DefaultRouter()
@@ -10,6 +10,7 @@ router.register(r"warehouses", WarehouseViewSet, basename="warehouse")
 router.register(r"shelves", ShelveViewSet, basename="shelve")
 router.register(r"inventories", InventoryViewSet, basename="inventory")
 router.register(r"movements", InventoryMovementViewSet, basename="inventorymovement")
+router.register(r"warehouse-creations", WarehouseCreationViewSet, basename="warehousecreation")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
