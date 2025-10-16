@@ -15,6 +15,7 @@ class Warehouse(models.Model):
     location = models.CharField(max_length=100)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+    
 class Shelve(models.Model):
     id_shelve= models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
@@ -47,7 +48,7 @@ class WarehouseCreation(models.Model):
     location = models.CharField(max_length=100)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-    inventory = models.ManyToManyField(Inventory, through='WarehouseInventory')
+    inventories = models.ManyToManyField(Inventory)
     
 
 
