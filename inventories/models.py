@@ -22,7 +22,7 @@ class WarehouseCreation(models.Model):
     location = models.CharField(max_length=100)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-    inventory = models.ManyToManyField(Product, through='inventories_warehousecreation')
+    inventory = models.ManyToManyField(Product, through='inventories')
     
 class Shelve(models.Model):
     id_shelve= models.AutoField(primary_key=True)
