@@ -22,7 +22,7 @@ class WarehouseViewSet(viewsets.ModelViewSet):
 class WarehouseCreationViewSet(viewsets.ModelViewSet):
     queryset = WarehouseCreation.objects.all().order_by('id_warehouse_creation')
     serializer_class = WarehouseCreationSerializer
-    """
+    
     @transaction.atomic
     def perform_create(self, serializer):
         # Crear una sola bodega
@@ -43,8 +43,8 @@ class WarehouseCreationViewSet(viewsets.ModelViewSet):
      
         WarehouseCreation.objects.bulk_create(warehouses_to_create)
         return Response({"detail": "Bodegas creadas correctamente."})
-    """
-    """@action(detail=False, methods=['post'])
+    
+    @action(detail=False, methods=['post'])
     def create_multiple(self, request):
         
         data = request.data  # Lista de bodegas 
@@ -61,7 +61,7 @@ class WarehouseCreationViewSet(viewsets.ModelViewSet):
             warehouses_to_create.append(warehouse_to_create)
 
         WarehouseCreation.objects.bulk_create(warehouses_to_create)
-        return Response({"detail": "Bodegas creadas correctamente."})  """""
+        return Response({"detail": "Bodegas creadas correctamente."})  
         
 
 
