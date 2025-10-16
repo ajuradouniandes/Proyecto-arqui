@@ -41,7 +41,6 @@ class InventoryMovement(models.Model):
     movement_date = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(null=True, blank=True)
 
-
 class WarehouseCreation(models.Model):
     id_warehouse_creation = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
