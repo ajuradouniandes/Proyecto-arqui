@@ -22,7 +22,6 @@ class Warehouse(models.Model):
     location = models.CharField(max_length=100)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-    warehousecreation = models.ForeignKey( WarehouseCreation, on_delete=models.CASCADE, related_name='inventories', null=True, blank=True)
     
 class Shelve(models.Model):
     id_shelve= models.AutoField(primary_key=True)
