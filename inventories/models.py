@@ -48,9 +48,3 @@ class WarehouseCreation(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     inventories= models.ManyToManyField(Inventory, related_name='warehouse_creations', blank=True)
-
-
-  
-    
-
-
