@@ -8,13 +8,21 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-
+    
+class WarehouseCreation(models.Model):
+    id_warehouse_creation = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
+    location = models.CharField(max_length=100)
+    creation_date = models.DateTimeField(auto_now_add=True)
+    update_date = models.DateTimeField(auto_now=True)
+    
 class Warehouse(models.Model):
     id_warehouse = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50)
     location = models.CharField(max_length=100)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+    warehousecreation = models.ForeignKey( WarehouseCreation, on_delete=models.CASCADE, related_name='inventories', null=True, blank=True)
     
 class Shelve(models.Model):
     id_shelve= models.AutoField(primary_key=True)
@@ -41,13 +49,8 @@ class InventoryMovement(models.Model):
     movement_date = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(null=True, blank=True)
 
-class WarehouseCreation(models.Model):
-    id_warehouse_creation = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50)
-    location = models.CharField(max_length=100)
-    creation_date = models.DateTimeField(auto_now_add=True)
-    update_date = models.DateTimeField(auto_now=True)
-    inventories = models.ManyToManyField(Inventory)
+
+  
     
 
 
