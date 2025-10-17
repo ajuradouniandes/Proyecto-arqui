@@ -1,4 +1,4 @@
-from pytz import timezone
+from django.utils import timezone
 from rest_framework import viewsets
 from .models import Product, Warehouse, Shelve, Inventory, InventoryMovement, WarehouseCreation    
 from .serializers import InventorySerializer, ProductSerializer, WarehouseSerializer, ShelveSerializer, InventoryMovementSerializer, WarehouseCreationSerializer
