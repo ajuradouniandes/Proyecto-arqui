@@ -17,7 +17,7 @@ class WarehouseSerializer(serializers.ModelSerializer):
 class WarehouseCreationSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = ('id_warehouse_creation', 'name', 'location', 'creation_date', 'update_date',) #'inventories',)
+        fields = ('id_warehouse_creation', 'name', 'location', 'creation_date', 'update_date', 'inventories',)
         model = models.WarehouseCreation
 
 class ShelveSerializer(serializers.ModelSerializer):
