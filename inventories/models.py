@@ -15,6 +15,7 @@ class WarehouseCreation(models.Model):
     location = models.CharField(max_length=100)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+    inventories= models.ManyToManyField('Inventory', related_name='warehouse_creations', blank=True)
     
 class Warehouse(models.Model):
     id_warehouse = models.AutoField(primary_key=True)
