@@ -48,3 +48,13 @@ class WarehouseCreation(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     inventories = models.ManyToManyField(Inventory, related_name='warehouse_creations', blank=True)
+
+class OrderCreation(models.Model):
+    id_order_creation = models.AutoField(primary_key=True)
+    order_number = models.CharField(max_length=50)
+    product_name = models.ManyToManyField(Product, related_name='order_creations', blank=True)
+    quantity = models.IntegerField()
+    status = models.CharField(max_length=50)
+    creation_date = models.DateTimeField(auto_now_add=True)
+    update_date = models.DateTimeField(auto_now=True)
+    inventories = models.ManyToManyField(Inventory, related_name='order_creations', blank=True)

@@ -37,3 +37,9 @@ class InventoryMovementSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('id_movement', 'inventory', 'movement_type', 'quantity', 'movement_date', 'notes',)
         model = models.InventoryMovement
+
+class OrderCreationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = ('id_order_creation', 'order_number', 'creation_date', 'update_date', 'inventories',)
+        model = models.OrderCreation

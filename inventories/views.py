@@ -1,7 +1,7 @@
 from django.utils import timezone
 from rest_framework import viewsets
-from .models import Product, Warehouse, Shelve, Inventory, InventoryMovement, WarehouseCreation    
-from .serializers import InventorySerializer, ProductSerializer, WarehouseSerializer, ShelveSerializer, InventoryMovementSerializer, WarehouseCreationSerializer
+from .models import Product, Warehouse, Shelve, Inventory, InventoryMovement, WarehouseCreation, OrderCreation 
+from .serializers import InventorySerializer, ProductSerializer, WarehouseSerializer, ShelveSerializer, InventoryMovementSerializer, WarehouseCreationSerializer, OrderCreationSerializer 
 from django.db import transaction
 from django.db.models import F
 from rest_framework.exceptions import ValidationError
@@ -9,6 +9,8 @@ from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from django.core.cache import cache
+from rest_framework import request
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -134,6 +136,38 @@ def _no_store(response):
     response["Pragma"] = "no-cache"
     return response
 
+class OrderCreationViewSet(viewsets.ModelViewSet):
+    queryset = OrderCreation.objects.all()
+    serializer_class = OrderCreationSerializer
+
+    @transaction.atomic
+    def create(self, request, *args, **kwargs):
+        # Validar y crear el pedido usando el serializer
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        order = serializer.save()
+
+        # Si la red está caída, guarda el pedido en caché
+        cache.set(f'order_{order.pk}', {
+            'product_name': serializer.validated_data.get('product_name'),
+            'quantity': serializer.validated_data.get('quantity'),
+        }, timeout=600)  # Timeout de 10 minutos 
+
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=201, headers=headers)
+    
+    def save_order_to_cache(request):
+        order_data = request.data
+        cache.set(f'order_{order_data["id"]}', order_data, timeout=600)
+        return JsonResponse({"message": "Order saved in cache"})
+    
+    def sync_cached_orders():
+        for key in cache.keys('order_*'):
+            order_data = cache.get(key)
+            if order_data:
+                # Guardar el pedido en la base de datos
+                OrderCreation.objects.create(**order_data)
+                cache.delete(key)  # Elimina la entrada de la caché después de sincronizarla
 
 @require_http_methods(["GET", "HEAD"])
 def health_check(request):

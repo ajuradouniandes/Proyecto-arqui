@@ -151,5 +151,16 @@ RABBITMQ_USER = 'monitoring_user'
 RABBITMQ_PASSWORD = 'arqui111'
 RABBITMQ_VIRTUAL_HOST = '/'
 
-CELERY_BROKER_URL = f'amqp://{RABBITMQ_USER}:{RABBITMQ_PASSWORD}@{RABBITMQ_HOST}:{RABBITMQ_PORT}/{RABBITMQ_VIRTUAL_HOST}'
-CELERY_RESULT_BACKEND = 'rpc://' 
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Asegúrate de que la URL esté correcta
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://localhost:6379/1',  # Cambia esto a la IP de tu servidor Redis si es diferente
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+    }
+}
