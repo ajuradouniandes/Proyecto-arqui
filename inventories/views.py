@@ -183,7 +183,7 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
             print('El pedido permanece en caché para reintentar más tarde.')
             pass
         
-        return Response(serializer.data, status=201)
+        return Response("", status=201)
 
         
     
