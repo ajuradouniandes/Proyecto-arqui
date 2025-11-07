@@ -57,4 +57,4 @@ class OrderCreation(models.Model):
     status = models.CharField(max_length=50)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-    inventories = models.ManyToManyField(Inventory, related_name='order_creations', blank=True)
+    inventories = models.ManyToManyField(Inventory, related_name='order_creations2', blank=True)
