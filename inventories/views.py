@@ -164,6 +164,9 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
         
                 order = serializer.save()
                 cache.delete(cache_key)
+                headers = self.get_success_headers(serializer.data)
+                return Response(serializer.data, status=201, headers=headers)
+    
         except DatabaseError as e:
             # Si ocurre un error, se elimina el pedido de la caché  
             print('Error al guardar el pedido en la base de datos:', e)
@@ -177,9 +180,10 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
             print('Error inesperado al guardar el pedido en la base de datos:', e)
             print('El pedido permanece en caché para reintentar más tarde.')
             pass
+        
+        return Response(serializer.data, status=201)
 
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=201, headers=headers)
+        
     
     def save_order_to_cache(request):
         order_data = request.data
