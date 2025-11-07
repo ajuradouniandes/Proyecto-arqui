@@ -151,7 +151,7 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
         cache.set(f'order_{order.pk}', {
             'product_name': serializer.validated_data.get('product_name'),
             'quantity': serializer.validated_data.get('quantity'),
-        }, timeout=600)  # Timeout de 10 minutos 
+        }, timeout=10)  # Timeout 
 
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=201, headers=headers)
