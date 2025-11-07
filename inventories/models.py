@@ -52,6 +52,7 @@ class WarehouseCreation(models.Model):
 class OrderCreation(models.Model):
     id_order_creation = models.AutoField(primary_key=True)
     order_number = models.CharField(max_length=50)
+    status = models.CharField(max_length=20, default='pending')
     quantity = models.IntegerField()
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
