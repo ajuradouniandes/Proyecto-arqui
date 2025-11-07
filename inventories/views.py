@@ -164,6 +164,7 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
         except Exception as e:
             # Si ocurre un error, se elimina el pedido de la caché  
             print('Error al guardar el pedido en la base de datos:', e)
+            print('El pedido permanece en caché para reintentar más tarde.')
             pass
 
         headers = self.get_success_headers(serializer.data)
