@@ -154,6 +154,12 @@ RABBITMQ_VIRTUAL_HOST = '/'
 CELERY_BROKER_URL = 'rediss://proyecto-cache-uhmcki.serverless.use1.cache.amazonaws.com:6379/0'
 CELERY_RESULT_BACKEND = 'rediss://proyecto-cache-uhmcki.serverless.use1.cache.amazonaws.com:6379/0'
 
+CELERY_BEAT_SCHEDULE = {
+    'run-sync_cached_orders-every-5-minutes': {
+        'task': 'inventories.tasks.sync_cached_orders',
+        'schedule': 300,  
+    },
+}
 
 CACHES = {
     'default': {
