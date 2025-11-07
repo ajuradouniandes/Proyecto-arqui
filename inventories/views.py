@@ -163,6 +163,7 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
         
         
                 order = serializer.save()
+                print('Pedido guardado en cache:', cache.get(cache_key))
                 #cache.delete(cache_key)
                 headers = self.get_success_headers(serializer.data)
                 return Response(serializer.data, status=201, headers=headers)
