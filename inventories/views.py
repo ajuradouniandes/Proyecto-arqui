@@ -159,7 +159,7 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
                     'creation_date': serializer.validated_data.get('creation_date'),
                     'update_date': serializer.validated_data.get('update_date'),
                     'inventories': serializer.validated_data.get('inventories'),
-                }, timeout=10)  # Timeout
+                }, timeout=7200)  # Timeout
                 
                 
                 print('Pedido guardado en cache:', cache.get(cache_key))
