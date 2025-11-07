@@ -159,11 +159,12 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
                     'creation_date': serializer.validated_data.get('creation_date'),
                     'update_date': serializer.validated_data.get('update_date'),
                     'inventories': serializer.validated_data.get('inventories'),
-                }, timeout=10)  # Timeout 
-        
-        
-                order = serializer.save()
+                }, timeout=10)  # Timeout
+                
+                
                 print('Pedido guardado en cache:', cache.get(cache_key))
+                order = serializer.save()
+                
                 #cache.delete(cache_key)
                 headers = self.get_success_headers(serializer.data)
                 return Response(serializer.data, status=201, headers=headers)
