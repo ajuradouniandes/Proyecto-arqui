@@ -148,14 +148,14 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
         order = serializer.save()
 
         # Si la red está caída, guarda el pedido en caché
-        cache.set(f'order_{order.pk}', {
-            'product_name': serializer.validated_data.get('product_name'),
-            'quantity': serializer.validated_data.get('quantity'),
-            'order_number': serializer.validated_data.get('order_number'),
-            'creation_date': serializer.validated_data.get('creation_date'),
-            'update_date': serializer.validated_data.get('update_date'),
-            'inventories': serializer.validated_data.get('inventories'),
-        }, timeout=10)  # Timeout 
+        #cache.set(f'order_{order.pk}', {
+            #'product_name': serializer.validated_data.get('product_name'),
+            #'quantity': serializer.validated_data.get('quantity'),
+            #'order_number': serializer.validated_data.get('order_number'),
+            #'creation_date': serializer.validated_data.get('creation_date'),
+            #'update_date': serializer.validated_data.get('update_date'),
+            #'inventories': serializer.validated_data.get('inventories'),
+        #}, timeout=10)  # Timeout 
 
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=201, headers=headers)
