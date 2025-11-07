@@ -151,14 +151,14 @@ RABBITMQ_USER = 'monitoring_user'
 RABBITMQ_PASSWORD = 'arqui111'
 RABBITMQ_VIRTUAL_HOST = '/'
 
-CELERY_BROKER_URL = 'redis://proyecto-cache-uhmcki.serverless.use1.cache.amazonaws.com:6379'
-CELERY_RESULT_BACKEND = 'redis://proyecto-cache-uhmcki.serverless.use1.cache.amazonaws.com:6379'
+CELERY_BROKER_URL = 'redis://proyecto-cache-uhmcki.serverless.use1.cache.amazonaws.com:6379/0'
+CELERY_RESULT_BACKEND = 'redis://proyecto-cache-uhmcki.serverless.use1.cache.amazonaws.com:6379/2'
 
 
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://proyecto-cache-uhmcki.serverless.use1.cache.amazonaws.com:6379',  
+        'LOCATION': 'redis://proyecto-cache-uhmcki.serverless.use1.cache.amazonaws.com:6379/1',  
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         },
