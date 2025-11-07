@@ -157,7 +157,7 @@ CELERY_RESULT_BACKEND = 'rediss://proyecto-cache-uhmcki.serverless.use1.cache.am
 CELERY_BEAT_SCHEDULE = {
     'run-sync_cached_orders-every-5-minutes': {
         'task': 'inventories.tasks.sync_cached_orders',
-        'schedule': 300,  
+        'schedule': 30,
     },
 }
 
