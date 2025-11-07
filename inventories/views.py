@@ -2,7 +2,8 @@ from django.utils import timezone
 from rest_framework import viewsets
 from .models import Product, Warehouse, Shelve, Inventory, InventoryMovement, WarehouseCreation, OrderCreation 
 from .serializers import InventorySerializer, ProductSerializer, WarehouseSerializer, ShelveSerializer, InventoryMovementSerializer, WarehouseCreationSerializer, OrderCreationSerializer 
-from django.db import transaction
+from django.db import transaction, DatabaseError
+from django.db.utils import OperationalError
 from django.db.models import F
 from rest_framework.exceptions import ValidationError
 from django.views.decorators.http import require_http_methods
@@ -142,24 +143,25 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
 
     
     def create(self, request, *args, **kwargs):
-        # Validar y crear el pedido usando el serializer
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        
-
-        # Si la red está caída, guarda el pedido en caché (usa order_number como clave temporal)
-        cache_key = f'order_{serializer.validated_data.get("order_number")}'
-        cache.set(cache_key, {
-            'product_name': serializer.validated_data.get('product_name'),
-            'quantity': serializer.validated_data.get('quantity'),
-            'order_number': serializer.validated_data.get('order_number'),
-            'creation_date': serializer.validated_data.get('creation_date'),
-            'update_date': serializer.validated_data.get('update_date'),
-            'inventories': serializer.validated_data.get('inventories'),
-        }, timeout=10)  # Timeout 
-        
         try:
             with transaction.atomic():
+            # Validar y crear el pedido usando el serializer
+                serializer = self.get_serializer(data=request.data)
+                serializer.is_valid(raise_exception=True)
+                
+
+                # Si la red está caída, guarda el pedido en caché (usa order_number como clave temporal)
+                cache_key = f'order_{serializer.validated_data.get("order_number")}'
+                cache.set(cache_key, {
+                    'product_name': serializer.validated_data.get('product_name'),
+                    'quantity': serializer.validated_data.get('quantity'),
+                    'order_number': serializer.validated_data.get('order_number'),
+                    'creation_date': serializer.validated_data.get('creation_date'),
+                    'update_date': serializer.validated_data.get('update_date'),
+                    'inventories': serializer.validated_data.get('inventories'),
+                }, timeout=10)  # Timeout 
+        
+        
                 order = serializer.save()
                 cache.delete(cache_key)
         except DatabaseError as e:
