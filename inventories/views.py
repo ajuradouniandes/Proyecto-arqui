@@ -140,7 +140,7 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
     queryset = OrderCreation.objects.all()
     serializer_class = OrderCreationSerializer
 
-    @transaction.atomic
+    
     def create(self, request, *args, **kwargs):
         # Validar y crear el pedido usando el serializer
         serializer = self.get_serializer(data=request.data)
@@ -159,9 +159,10 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
         }, timeout=10)  # Timeout 
         
         try:
-            order = serializer.save()
-            cache.delete(cache_key)
-        except Exception as e:
+            with transaction.atomic():
+                order = serializer.save()
+                cache.delete(cache_key)
+        except DatabaseError as e:
             # Si ocurre un error, se elimina el pedido de la caché  
             print('Error al guardar el pedido en la base de datos:', e)
             print('El pedido permanece en caché para reintentar más tarde.')
