@@ -145,17 +145,26 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
         # Validar y crear el pedido usando el serializer
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        order = serializer.save()
+        
 
-        # Si la red está caída, guarda el pedido en caché
-        #cache.set(f'order_{order.pk}', {
-            #'product_name': serializer.validated_data.get('product_name'),
-            #'quantity': serializer.validated_data.get('quantity'),
-            #'order_number': serializer.validated_data.get('order_number'),
-            #'creation_date': serializer.validated_data.get('creation_date'),
-            #'update_date': serializer.validated_data.get('update_date'),
-            #'inventories': serializer.validated_data.get('inventories'),
-        #}, timeout=10)  # Timeout 
+        # Si la red está caída, guarda el pedido en caché (usa order_number como clave temporal)
+        cache_key = f'order_{serializer.validated_data.get("order_number")}'
+        cache.set(cache_key, {
+            'product_name': serializer.validated_data.get('product_name'),
+            'quantity': serializer.validated_data.get('quantity'),
+            'order_number': serializer.validated_data.get('order_number'),
+            'creation_date': serializer.validated_data.get('creation_date'),
+            'update_date': serializer.validated_data.get('update_date'),
+            'inventories': serializer.validated_data.get('inventories'),
+        }, timeout=10)  # Timeout 
+        
+        try:
+            order = serializer.save()
+            cache.delete(cache_key)
+        except Exception as e:
+            # Si ocurre un error, se elimina el pedido de la caché  
+            print('Error al guardar el pedido en la base de datos:', e)
+            pass
 
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=201, headers=headers)
