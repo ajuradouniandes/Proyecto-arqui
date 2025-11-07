@@ -53,7 +53,6 @@ class OrderCreation(models.Model):
     id_order_creation = models.AutoField(primary_key=True)
     order_number = models.CharField(max_length=50)
     quantity = models.IntegerField()
-    status = models.CharField(max_length=50)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     product_name = models.ManyToManyField(Product, related_name='order_creations', blank=True)
