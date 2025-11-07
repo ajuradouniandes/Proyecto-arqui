@@ -151,8 +151,8 @@ RABBITMQ_USER = 'monitoring_user'
 RABBITMQ_PASSWORD = 'arqui111'
 RABBITMQ_VIRTUAL_HOST = '/'
 
-CELERY_BROKER_URL = 'redis://localhost:6379/0'  # Asegúrate de que la URL esté correcta
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = 'redis://proyecto-cache-uhmcki.serverless.use1.cache.amazonaws.com:6379'
+CELERY_RESULT_BACKEND = 'redis://proyecto-cache-uhmcki.serverless.use1.cache.amazonaws.com:6379'
 
 
 CACHES = {
