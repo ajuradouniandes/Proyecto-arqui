@@ -57,4 +57,4 @@ class OrderCreation(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     product_name = models.ManyToManyField(Product, related_name='order_creations', blank=True)
-    inventories = models.ManyToManyField(Inventory, related_name='order_creations2', blank=True)
+    inventories = models.ManyToManyField(Inventory, related_name='order_creations', blank=True)
