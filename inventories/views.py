@@ -171,6 +171,10 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
             print('Error operativo al guardar el pedido en la base de datos:', e)
             print('El pedido permanece en caché para reintentar más tarde.')
             pass
+        except Exception as e:
+            print('Error inesperado al guardar el pedido en la base de datos:', e)
+            print('El pedido permanece en caché para reintentar más tarde.')
+            pass
 
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=201, headers=headers)
