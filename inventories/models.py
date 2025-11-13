@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Product(models.Model):
@@ -50,9 +51,14 @@ class WarehouseCreation(models.Model):
     inventories = models.ManyToManyField(Inventory, related_name='warehouse_creations', blank=True)
 
 class OrderCreation(models.Model):
+    STATUS_CHOICES = [
+        ('pendiente', 'Pendiente'),
+        ('verificado', 'Verificado'),
+        ('despachado', 'Despachado'),
+    ]
     id_order_creation = models.AutoField(primary_key=True)
     order_number = models.CharField(max_length=50)
-    status = models.CharField(max_length=20, default='pending')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendiente')
     quantity = models.IntegerField()
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
@@ -68,12 +74,11 @@ class AuditLog(models.Model):
     
     id_audit_log = models.AutoField(primary_key=True)
     order = models.ForeignKey(OrderCreation, on_delete=models.CASCADE, related_name='audit_logs')
-    user = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     inventories = models.ManyToManyField(Inventory, related_name='audit_logs', blank=True)
     action_type = models.CharField(max_length=50, choices=ACTION_TYPES)
     detail = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.created_at} - {self.user} - {self.action_type} - {self.updated_at}"
