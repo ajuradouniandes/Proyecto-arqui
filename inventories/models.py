@@ -58,3 +58,22 @@ class OrderCreation(models.Model):
     update_date = models.DateTimeField(auto_now=True)
     product_name = models.ManyToManyField(Product, related_name='order_creations', blank=True)
     inventories = models.ManyToManyField(Inventory, related_name='order_creations', blank=True)
+
+class AuditLog(models.Model):
+    ACTION_TYPES = [
+        ('cambio_estado', 'Cambio de Estado'),
+        ('cambio_inventario', 'Cambio de Inventario'),
+        ('despacho', 'Despacho'),
+    ]
+    
+    id_audit_log = models.AutoField(primary_key=True)
+    order = models.ForeignKey(OrderCreation, on_delete=models.CASCADE, related_name='audit_logs')
+    user = models.CharField(max_length=100)
+    inventories = models.ManyToManyField(Inventory, related_name='audit_logs', blank=True)
+    action_type = models.CharField(max_length=50, choices=ACTION_TYPES)
+    detail = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.created_at} - {self.user} - {self.action_type} - {self.updated_at}"
