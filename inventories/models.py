@@ -71,14 +71,12 @@ class AuditLog(models.Model):
         ('cambio_inventario', 'Cambio de Inventario'),
         ('despacho', 'Despacho'),
     ]
-    
-    id_audit_log = models.AutoField(primary_key=True)
-    order = models.ForeignKey(OrderCreation, on_delete=models.CASCADE, related_name='audit_logs')
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    inventories = models.ManyToManyField(Inventory, related_name='audit_logs', blank=True)
+
+    order = models.ForeignKey(OrderCreation, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     action_type = models.CharField(max_length=50, choices=ACTION_TYPES)
     detail = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.created_at} - {self.user} - {self.action_type} - {self.updated_at}"
+        return f"{self.created_at} - {self.user} - {self.action_type}"

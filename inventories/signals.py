@@ -5,7 +5,7 @@ from .models import OrderCreation, AuditLog
 @receiver(pre_save, sender=OrderCreation)
 def log_critical_changes(sender, instance, **kwargs):
     if not instance.pk:
-        return  # es un pedido nuevo, no modificación
+        return  # si es un pedido nuevo, no se audita
 
     previous = OrderCreation.objects.get(pk=instance.pk)
     changes = []
@@ -17,7 +17,6 @@ def log_critical_changes(sender, instance, **kwargs):
     if previous.quantity != instance.quantity:
         changes.append(f"Cantidad: {previous.quantity} → {instance.quantity}")
 
-    # Si hubo cambios importantes → registrar
     if changes:
         AuditLog.objects.create(
             user=getattr(instance, "_modified_by", None),

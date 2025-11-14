@@ -44,8 +44,4 @@ class OrderCreationSerializer(serializers.ModelSerializer):
         fields = ('id_order_creation', 'order_number', 'status','quantity', 'creation_date', 'update_date', 'product_name', 'inventories',)
         model = models.OrderCreation
 
-class AuditLogSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        fields = ('id_audit_log', 'order', 'user', 'inventories', 'action_type', 'detail',)
-        model = models.AuditLog
+    
