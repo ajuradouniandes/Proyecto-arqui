@@ -206,7 +206,6 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
 
 class AuditLogViewSet(viewsets.ModelViewSet):
     queryset = AuditLog.objects.all().order_by('-created_at')
-    serializer_class = AuditLogSerializer
     
     @api_view(['POST'])
     @authentication_classes([TokenAuthentication])
