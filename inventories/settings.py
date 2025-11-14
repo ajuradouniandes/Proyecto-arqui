@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'inventories',
     'rest_framework',
     'rest_framework.authtoken',
-    'inventories.apps.InventoriesConfig',
+    
     
 ]
 
