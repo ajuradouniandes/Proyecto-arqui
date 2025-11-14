@@ -82,9 +82,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'databaseinventory',
-        'USER': 'postgres',
+        'USER': 'proyecto_arqui',
         'PASSWORD': 'arqui2025',
-        'HOST': 'databaseinventory.cvkooum6o8l7.us-east-1.rds.amazonaws.com',
+        'HOST': 'databaseinventory.czwcqsywe2ag.us-east-1.rds.amazonaws.com',
         'PORT': 5432,
     }
 }
