@@ -1,7 +1,7 @@
 from django.utils import timezone
 from rest_framework import viewsets
 from .models import Product, Warehouse, Shelve, Inventory, InventoryMovement, WarehouseCreation, OrderCreation, AuditLog 
-from .serializers import InventorySerializer, ProductSerializer, WarehouseSerializer, ShelveSerializer, InventoryMovementSerializer, WarehouseCreationSerializer, OrderCreationSerializer
+from .serializers import AuditLogSerializer, InventorySerializer, ProductSerializer, WarehouseSerializer, ShelveSerializer, InventoryMovementSerializer, WarehouseCreationSerializer, OrderCreationSerializer
 from django.db import transaction, DatabaseError
 from django.db.utils import OperationalError
 from django.db.models import F
@@ -206,6 +206,7 @@ class OrderCreationViewSet(viewsets.ModelViewSet):
 
 class AuditLogViewSet(viewsets.ModelViewSet):
     queryset = AuditLog.objects.all().order_by('-created_at')
+    serializer_class = AuditLogSerializer
     
     @api_view(['POST'])
     @authentication_classes([TokenAuthentication])
